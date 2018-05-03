@@ -31,6 +31,12 @@ project page or the Docker Hub entry.
 * https://github.com/docker-library/gcc/
 * https://hub.docker.com/_/gcc/
 
+## CppUTest
+
+CppUTest is a unit testing and mocking framework for C/C++.  For further
+details please see their project page.
+* http://cpputest.github.io/
+
 ## spdlog
 
 spdlog is a fast, header only C++ logging library.  For further details please
