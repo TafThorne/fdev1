@@ -6,6 +6,7 @@ LABEL \
  MAINTAINER="Thomas Thorne <TafThorne@GoogleMail.com>"
 RUN apt-get -y update && \
   apt-get -y install \
+    cppcheck \
     cpputest \
     libspdlog-dev;\
   adduser builder -uid 1000
