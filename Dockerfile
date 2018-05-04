@@ -7,5 +7,7 @@ LABEL \
 RUN apt-get -y update && \
   apt-get -y install \
     cpputest \
-    libspdlog-dev
+    libspdlog-dev;\
+  adduser builder -uid 1000
+USER builder
 
