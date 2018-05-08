@@ -9,7 +9,8 @@ RUN apt-get -y update && \
     cppcheck \
     cpputest \
     lcov \
-    libspdlog-dev;\
+    libspdlog-dev \
+    zip;\
   adduser builder -uid 1000
 USER builder
 
