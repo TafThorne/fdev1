@@ -11,6 +11,7 @@ RUN apt-get -y update && \
     lcov \
     libspdlog-dev \
     zip;\
-  adduser builder -uid 1000
+  adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
+  echo "builder:.builder" chpasswd
 USER builder
 
