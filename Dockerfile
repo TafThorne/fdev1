@@ -1,6 +1,6 @@
 # GNU GCC & other Libraries
 
-FROM    gcc
+FROM gcc:7
 LABEL \
  Description="Basic GNU gcc Debian environment with a number of libraries configured" \
  MAINTAINER="Thomas Thorne <TafThorne@GoogleMail.com>"
