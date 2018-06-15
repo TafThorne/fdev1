@@ -10,6 +10,7 @@ RUN apt-get -y update && \
     cpputest \
     lcov \
     libspdlog-dev \
+    libwebsocketpp-dev \
     netcat-openbsd \
     zip;\
   adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
