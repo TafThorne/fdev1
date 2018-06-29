@@ -13,7 +13,7 @@ RUN apt-get -y update && \
     libhdf5-dev \
     libhdf5-serial-dev \
     libspdlog-dev \
-    libwebsockets-dev
+    libwebsockets-dev \
     libwebsocketpp-dev \
     netcat-openbsd \
     zip;\
