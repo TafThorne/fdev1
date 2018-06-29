@@ -9,6 +9,9 @@ RUN apt-get -y update && \
     cppcheck \
     cpputest \
     lcov \
+    libhdf5-cpp-100 \
+    libhdf5-dev \
+    libhdf5-serial-dev \
     libspdlog-dev \
     libwebsocketpp-dev \
     netcat-openbsd \
