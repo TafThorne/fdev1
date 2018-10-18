@@ -20,7 +20,10 @@ RUN \
     echo "--- installing protobuf ---" && \
     cd third_party/protobuf && \
     ./autogen.sh && ./configure --enable-shared && \
-    make -j$(nproc) && make install && make clean && ldconfig 
+    make -j$(nproc) && make install && make clean && ldconfig && \
+    echo "--- installing grpc ---" && \
+    cd /var/local/git/grpc && \
+    make -j$(nproc) && make install && make clean && ldconfig
 
 FROM gcc:7
 LABEL \
@@ -31,6 +34,11 @@ LABEL \
 COPY --from=builder /usr/local/lib/libproto* /usr/local/lib/
 COPY --from=builder /usr/local/bin/protoc /usr/local/bin/
 COPY --from=builder /usr/local/include/google/protobuf /usr/local/include/google/protobuf
+# gRPC
+COPY --from=builder /usr/local/lib/libgrpc* /usr/local/lib/
+COPY --from=builder /usr/local/bin/grpc_* /usr/local/bin/
+COPY --from=builder /usr/local/lib/libaddress_sorting.so.6.0.0 /usr/local/lib/
+# Install remaining tools using apt-get
 RUN apt-get -y update && \
   apt-get -y install \
     uuid-dev \
