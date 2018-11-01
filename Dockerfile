@@ -10,7 +10,6 @@ RUN \
     libc++-dev \
     libgflags-dev \
     libgtest-dev
- 
 RUN \
   # Protocol Buffer & gRPC
   # install protobuf first, then grpc
@@ -26,7 +25,7 @@ RUN \
     cd /var/local/git/grpc && \
     make -j$(nproc) && make install && make clean && ldconfig
 
-FROM gcc:7
+FROM debian
 LABEL \
  Description="Basic GNU gcc Debian environment with a number of libraries configured" \
  MAINTAINER="Thomas Thorne <TafThorne@GoogleMail.com>"
@@ -49,9 +48,9 @@ COPY --from=builder /usr/local/lib/pkgconfig/grpc*.pc /usr/local/lib/pkgconfig/
 # Install remaining tools using apt-get
 RUN apt-get -y update && \
   apt-get -y install \
-    uuid-dev \
     cppcheck \
     cpputest \
+    build-essential \
     lcov \
     libhdf5-cpp-100 \
     libhdf5-dev \
@@ -59,7 +58,9 @@ RUN apt-get -y update && \
     libspdlog-dev \
     libwebsockets-dev \
     libwebsocketpp-dev \
+    make \
     netcat-openbsd \
+    uuid-dev \
     valgrind \
     zip;\
   adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
