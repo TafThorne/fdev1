@@ -79,6 +79,7 @@ RUN \
     netcat-openbsd \
     uuid-dev \
     valgrind \
+    wget \
     zip \
   && rm -rf /var/lib/apt/lists/*; \
   adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
