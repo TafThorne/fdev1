@@ -1,16 +1,29 @@
 # GNU GCC & other Libraries ontop of Debian
 
-#Compile any tools we cannot install from packages
-FROM gcc:7 as builder
+# Setup basic image for tool complication to take place in
+FROM debian as base
 USER 0
 RUN \
   apt-get -y update && \
   apt-get -y install \
+    autoconf \
     clang \
+    build-essential \
     libc++-dev \
     libgflags-dev \
-    libgtest-dev
+    libgtest-dev \
+    libtool \
+    make
+
+# Compile any tools we cannot install from packages
+FROM base as builder
+USER 0
 RUN \
+  apt-get -y update && \
+  apt-get -y install \
+    curl \
+    git \
+    && \
   # Protocol Buffer & gRPC
   # install protobuf first, then grpc
   git clone -b $(curl -L https://grpc.io/release) \
@@ -25,7 +38,7 @@ RUN \
     cd /var/local/git/grpc && \
     make -j$(nproc) && make install && make clean && ldconfig
 
-FROM debian
+FROM base
 LABEL \
  Description="Basic GNU gcc Debian environment with a number of libraries configured" \
  MAINTAINER="Thomas Thorne <TafThorne@GoogleMail.com>"
@@ -46,11 +59,11 @@ COPY --from=builder /usr/local/lib/libgrpc* /usr/local/lib/
 COPY --from=builder /usr/local/lib/pkgconfig/gpr.pc /usr/local/lib/pkgconfig/
 COPY --from=builder /usr/local/lib/pkgconfig/grpc*.pc /usr/local/lib/pkgconfig/
 # Install remaining tools using apt-get
-RUN apt-get -y update && \
+RUN \
+  apt-get -y update && \
   apt-get -y install \
     cppcheck \
     cpputest \
-    build-essential \
     lcov \
     libhdf5-cpp-100 \
     libhdf5-dev \
@@ -58,7 +71,6 @@ RUN apt-get -y update && \
     libspdlog-dev \
     libwebsockets-dev \
     libwebsocketpp-dev \
-    make \
     netcat-openbsd \
     uuid-dev \
     valgrind \
