@@ -13,7 +13,8 @@ RUN \
     libgflags-dev \
     libgtest-dev \
     libtool \
-    make
+    make \
+    && rm -rf /var/lib/apt/lists/*
 
 # Compile any tools we cannot install from packages
 FROM base as builder
@@ -23,6 +24,7 @@ RUN \
   apt-get -y install \
     curl \
     git \
+    && rm -rf /var/lib/apt/lists/* \
     && \
   # Protocol Buffer & gRPC
   # install protobuf first, then grpc
@@ -77,7 +79,8 @@ RUN \
     netcat-openbsd \
     uuid-dev \
     valgrind \
-    zip;\
+    zip \
+  && rm -rf /var/lib/apt/lists/*; \
   adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
   echo "builder:.builder" chpasswd
 USER builder
