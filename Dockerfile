@@ -8,12 +8,14 @@ RUN \
   apt-get -y install \
     autoconf \
     clang \
+    curl \
     build-essential \
     libc++-dev \
     libgflags-dev \
     libgtest-dev \
     libtool \
     make \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Compile any tools we cannot install from packages
@@ -22,7 +24,6 @@ USER 0
 RUN \
   apt-get -y update && \
   apt-get -y install \
-    curl \
     git \
     && rm -rf /var/lib/apt/lists/* \
     && \
@@ -78,7 +79,6 @@ RUN \
     netcat-openbsd \
     uuid-dev \
     valgrind \
-    wget \
     zip \
   && rm -rf /var/lib/apt/lists/*; \
   adduser builder -uid 1000 --disabled-password --gecos "Bob Builder,1,2,3"; \
