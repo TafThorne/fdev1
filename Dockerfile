@@ -77,6 +77,7 @@ RUN \
     libwebsockets-dev \
     libwebsocketpp-dev \
     netcat-openbsd \
+    pkg-config \
     uuid-dev \
     valgrind \
     zip \
