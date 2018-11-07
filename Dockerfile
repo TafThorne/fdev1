@@ -69,6 +69,7 @@ RUN \
   apt-get -y install \
     cppcheck \
     cpputest \
+    git \
     lcov \
     libhdf5-cpp-100 \
     libhdf5-dev \
