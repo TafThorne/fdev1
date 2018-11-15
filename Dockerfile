@@ -28,7 +28,7 @@ RUN \
     && rm -rf /var/lib/apt/lists/* \
     && \
   # Protocol Buffer & gRPC
-  # install protobuf first, then grpc
+  # install protobuf first, then grpc, then grpc_cli
   git clone -b $(curl -L https://grpc.io/release) \
       https://github.com/grpc/grpc /var/local/git/grpc && \
     cd /var/local/git/grpc && \
@@ -39,8 +39,10 @@ RUN \
     make -j$(nproc) && make install && make clean && ldconfig && \
     echo "--- installing grpc ---" && \
     cd /var/local/git/grpc && \
-    make -j$(nproc) && make install && make clean && ldconfig
+    make -j$(nproc) && make install && make clean && ldconfig && \
+    make -j$(nproc) grpc_cli
 
+# Put the main image together
 FROM base
 LABEL \
  Description="Basic GNU gcc Debian environment with a number of libraries configured" \
@@ -63,6 +65,8 @@ COPY --from=builder /usr/local/lib/libaddress_sorting* \
 COPY --from=builder /usr/local/lib/pkgconfig/gpr.pc \
                     /usr/local/lib/pkgconfig/grpc*.pc \
                     /usr/local/lib/pkgconfig/
+# grpc_cli
+COPY --from=builder /var/local/git/grpc/bins/opt/grpc_cli /usr/local/bin/
 # Install remaining tools using apt-get
 RUN \
   apt-get -y update && \
